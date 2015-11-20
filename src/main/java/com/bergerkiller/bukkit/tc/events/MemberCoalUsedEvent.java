@@ -1,8 +1,9 @@
 package com.bergerkiller.bukkit.tc.events;
 
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.TrainCarts;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
 public class MemberCoalUsedEvent extends MemberEvent {
@@ -21,7 +22,9 @@ public class MemberCoalUsedEvent extends MemberEvent {
     }
 
     public static MemberCoalUsedEvent call(final MinecartMember<?> member) {
-        return CommonUtil.callEvent(new MemberCoalUsedEvent(member));
+    	MemberCoalUsedEvent event = new MemberCoalUsedEvent(member);
+    	 Bukkit.getPluginManager().callEvent(event);
+        return event;
     }
 
     public boolean useCoal() {

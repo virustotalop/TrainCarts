@@ -6,7 +6,9 @@ import com.bergerkiller.bukkit.common.utils.LogicUtil;
 import com.bergerkiller.bukkit.tc.TrainCarts;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
 import com.bergerkiller.bukkit.tc.utils.GroundItemsInventory;
+
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.DoubleChest;
@@ -35,7 +37,7 @@ public class ItemAnimation {
     }
 
     public static void start(Object from, Object to, org.bukkit.inventory.ItemStack data) {
-        if (from == null || to == null || LogicUtil.nullOrEmpty(data)) {
+        if (from == null || to == null || data == null || data.getType() == Material.AIR) {
             return;
         }
         data = data.clone();

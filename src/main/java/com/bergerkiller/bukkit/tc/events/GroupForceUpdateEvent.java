@@ -1,7 +1,8 @@
 package com.bergerkiller.bukkit.tc.events;
 
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
 public class GroupForceUpdateEvent extends GroupEvent {
@@ -14,7 +15,9 @@ public class GroupForceUpdateEvent extends GroupEvent {
     }
 
     public static double call(MinecartGroup group, double force) {
-        return CommonUtil.callEvent(new GroupForceUpdateEvent(group, force)).getForce();
+    	GroupForceUpdateEvent event = new GroupForceUpdateEvent(group, force);
+    	Bukkit.getPluginManager().callEvent(event);
+        return event.getForce();
     }
 
     public static HandlerList getHandlerList() {

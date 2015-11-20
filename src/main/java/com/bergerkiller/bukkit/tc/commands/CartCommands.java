@@ -115,7 +115,7 @@ public class CartCommands {
                 prop.clearDestination();
                 p.sendMessage(ChatColor.YELLOW + "The destination for this minecart has been cleared!");
             } else {
-                prop.setDestination(StringUtil.join(" ", args[0]));
+                prop.setDestination(" " + args[0]);
                 p.sendMessage(ChatColor.YELLOW + "You set " + ChatColor.WHITE + args[0] + ChatColor.YELLOW + " as destination for this minecart!");
             }
         } else if (cmd.equals("remove") || cmd.equals("destroy")) {
@@ -197,7 +197,7 @@ public class CartCommands {
             if (!prop.restore()) {
                 p.sendMessage(ChatColor.RED + "Cart location could not be found: Cart is lost");
             } else {
-                BlockLocation bloc = prop.getLocation();
+            	Location bloc = prop.getLocation();
                 World world = bloc.getWorld();
                 if (world == null) {
                     p.sendMessage(ChatColor.RED + "Cart is on a world that is not loaded (" + bloc.world + ")");

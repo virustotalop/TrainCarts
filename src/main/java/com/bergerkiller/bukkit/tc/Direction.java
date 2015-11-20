@@ -1,6 +1,5 @@
 package com.bergerkiller.bukkit.tc;
 
-import com.bergerkiller.bukkit.common.utils.FaceUtil;
 import org.bukkit.block.BlockFace;
 
 import java.util.LinkedHashSet;

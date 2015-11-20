@@ -4,6 +4,9 @@ import com.bergerkiller.bukkit.common.bases.IntVector3;
 import com.bergerkiller.bukkit.common.utils.MaterialUtil;
 import com.bergerkiller.bukkit.common.utils.WorldUtil;
 import com.bergerkiller.bukkit.tc.events.SignActionEvent;
+
+import me.virustotal.utils.BlockUtil;
+
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -47,7 +50,7 @@ public abstract class OfflineSign {
     public SignActionEvent getSignEvent(World world) {
         if (this.isLoaded(world)) {
             Block signblock = this.location.toBlock(world);
-            if (MaterialUtil.ISSIGN.get(signblock)) {
+            if (BlockUtil.isSign(block)signblock)) {
                 SignActionEvent event = new SignActionEvent(signblock);
                 if (this.validate(event)) {
                     return event;

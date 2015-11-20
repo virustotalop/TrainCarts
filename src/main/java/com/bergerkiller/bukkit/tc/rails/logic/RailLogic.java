@@ -1,12 +1,13 @@
 package com.bergerkiller.bukkit.tc.rails.logic;
 
 import com.bergerkiller.bukkit.common.bases.IntVector3;
-import com.bergerkiller.bukkit.common.bases.mutable.LocationAbstract;
-import com.bergerkiller.bukkit.common.entity.CommonEntity;
-import com.bergerkiller.bukkit.common.entity.type.CommonMinecart;
 import com.bergerkiller.bukkit.common.utils.FaceUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
+
+import me.virustotal.traincarts.entity.CommonMinecart;
+
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
 /**
@@ -72,12 +73,12 @@ public abstract class RailLogic {
      * @return Forwards velocity of the minecart
      */
     public double getForwardVelocity(MinecartMember<?> member) {
-        final CommonEntity<?> e = member.getEntity();
+        final Entity e = member.getEntity();
         final BlockFace direction = member.getDirection();
         double vel = 0.0;
-        vel += e.vel.getX() * FaceUtil.cos(direction);
-        vel += e.vel.getY() * direction.getModY();
-        vel += e.vel.getZ() * FaceUtil.sin(direction);
+        vel += e.getVelocity().getX() * FaceUtil.cos(direction);
+        vel += e.getVelocity().getY() * direction.getModY();
+        vel += e.getVelocity().getZ() * FaceUtil.sin(direction);
         return vel;
     }
 
@@ -88,12 +89,12 @@ public abstract class RailLogic {
      * @param force  to set to, negative to reverse
      */
     public void setForwardVelocity(MinecartMember<?> member, double force) {
-        final CommonEntity<?> e = member.getEntity();
+        final Entity e = member.getEntity();
         if (!this.hasVerticalMovement() || !member.isMovingVerticalOnly()) {
-            e.vel.setX(force * FaceUtil.cos(member.getDirection()));
-            e.vel.setZ(force * FaceUtil.sin(member.getDirection()));
+            e.getVelocity().setX(force * FaceUtil.cos(member.getDirection()));
+            e.getVelocity().setZ(force * FaceUtil.sin(member.getDirection()));
         } else {
-            e.vel.setY(force * member.getDirection().getModY());
+            e.getVelocity().setY(force * member.getDirection().getModY());
         }
     }
 

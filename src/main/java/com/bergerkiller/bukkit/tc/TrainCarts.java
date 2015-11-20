@@ -24,20 +24,24 @@ import com.bergerkiller.bukkit.tc.signactions.SignActionDetector;
 import com.bergerkiller.bukkit.tc.signactions.SignActionSpawn;
 import com.bergerkiller.bukkit.tc.statements.Statement;
 import com.bergerkiller.bukkit.tc.storage.OfflineGroupManager;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 
-public class TrainCarts extends PluginBase {
+public class TrainCarts extends JavaPlugin {
     public static final StringReplaceBundle messageShortcuts = new StringReplaceBundle();
     public static final StringReplaceBundle statementShortcuts = new StringReplaceBundle();
     /*
@@ -90,7 +94,7 @@ public class TrainCarts extends PluginBase {
     private Set<String> disabledWorlds = new HashSet<String>();
     private Task signtask;
     private TCPacketListener packetListener;
-    private FileConfiguration config;
+    private FileConfigurationOptions config;
     private Map<String, ItemParser[]> parsers = new HashMap<String, ItemParser[]>();
 
     public static boolean canBreak(Material type) {
@@ -114,7 +118,7 @@ public class TrainCarts extends PluginBase {
      * @return message
      */
     public static String getMessage(String text) {
-        return StringUtil.ampToColor(messageShortcuts.replace(text));
+        return ChatColor.translateAlternateColorCodes('&', messageShortcuts.replace(text)));
     }
 
     /**
@@ -214,7 +218,7 @@ public class TrainCarts extends PluginBase {
     }
 
     public void loadConfig() {
-        config = new FileConfiguration(this);
+        config = new FileConfigurationOptions(this);
         config.load();
         config.setHeader("This is the configuration file of TrainCarts");
         config.addHeader("In here you can tweak TrainCarts to what you want");
@@ -447,7 +451,6 @@ public class TrainCarts extends PluginBase {
         config.save();
     }
 
-    @Override
     public void updateDependency(Plugin plugin, String pluginName, boolean enabled) {
         if (pluginName.equals("SignLink")) {
             Task.stop(signtask);
@@ -469,11 +472,6 @@ public class TrainCarts extends PluginBase {
         } else if (pluginName.equals("Essentials")) {
             EssentialsEnabled = enabled;
         }
-    }
-
-    @Override
-    public int getMinimumLibVersion() {
-        return Common.VERSION;
     }
 
     public void enable() {
@@ -628,12 +626,10 @@ public class TrainCarts extends PluginBase {
         return Commands.execute(sender, cmd, args);
     }
 
-    @Override
     public void localization() {
         this.loadLocales(Localization.class);
     }
 
-    @Override
     public void permissions() {
         this.loadPermissions(Permission.class);
     }

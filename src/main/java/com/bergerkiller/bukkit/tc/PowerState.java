@@ -1,6 +1,5 @@
 package com.bergerkiller.bukkit.tc;
 
-import com.bergerkiller.bukkit.common.utils.BlockUtil;
 import com.bergerkiller.bukkit.common.utils.FaceUtil;
 import com.bergerkiller.bukkit.common.utils.MaterialUtil;
 import org.bukkit.Material;

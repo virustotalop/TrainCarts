@@ -1,6 +1,7 @@
 package com.bergerkiller.bukkit.tc.actions;
 
-import com.bergerkiller.bukkit.common.utils.BlockUtil;
+import me.virustotal.traincarts.utils.BlockUtil;
+
 import org.bukkit.block.Block;
 
 public class BlockActionSetLevers extends BlockAction {
@@ -12,7 +13,10 @@ public class BlockActionSetLevers extends BlockAction {
     }
 
     @Override
-    public void start() {
+    public void start() 
+    {
         BlockUtil.setLeversAroundBlock(this.getBlock(), this.down);
     }
+    
+    
 }

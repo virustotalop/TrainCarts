@@ -1,9 +1,9 @@
 package com.bergerkiller.bukkit.tc;
 
-import com.bergerkiller.bukkit.common.permissions.PermissionEnum;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 
-public class Permission extends PermissionEnum {
+public class Permission {
     public static final Permission COMMAND_GLOBALPROPERTIES = new Permission("train.command.globalproperties", PermissionDefault.OP, "The player can edit the properties of all carts");
     public static final Permission COMMAND_PROPERTIES = new Permission("train.command.properties", PermissionDefault.TRUE, "The player can edit the properties of carts he owns");
     public static final Permission COMMAND_DESTROY = new Permission("train.command.destroy", PermissionDefault.OP, "The player can destroy owned carts through commands");
@@ -77,7 +77,29 @@ public class Permission extends PermissionEnum {
     public static final Permission BREAK_MINECART_ANY = new Permission("train.break.any", PermissionDefault.OP, "The player can break all carts in the game");
     public static final Permission GENERAL_PROPERTIES_ADMIN = new Permission("train.properties.admin", PermissionDefault.OP, "Carts placed by this player get the admin properties");
 
-    private Permission(final String node, final PermissionDefault permdefault, final String desc) {
-        super(node, permdefault, desc);
+    private String node;
+    private PermissionDefault permDefault;
+    private String desc;
+    
+    private Permission(final String node, final PermissionDefault permDefault, final String desc) {
+        this.node = node;
+        this.permDefault = permDefault;
+        this.desc = desc;
     }
+    
+    public String getNode()
+    {
+    	return this.node;
+    }
+    
+    public PermissionDefault getPermDefault()
+    {
+    	return this.permDefault;
+    }
+    
+    public String getDesc()
+    {
+    	return this.desc;
+    }
+    
 }

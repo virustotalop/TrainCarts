@@ -1,7 +1,8 @@
 package com.bergerkiller.bukkit.tc.events;
 
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -22,7 +23,9 @@ public class GroupLinkEvent extends Event implements Cancellable {
     }
 
     public static GroupLinkEvent call(final MinecartGroup group1, final MinecartGroup group2) {
-        return CommonUtil.callEvent(new GroupLinkEvent(group1, group2));
+    	GroupLinkEvent event = new GroupLinkEvent(group1, group2);
+    	Bukkit.getPluginManager().callEvent(event);
+        return event;
     }
 
     public MinecartGroup getGroup1() {

@@ -9,12 +9,15 @@ import com.bergerkiller.bukkit.tc.actions.MemberActionLaunch;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
 import com.bergerkiller.bukkit.tc.properties.TrainPropertiesStore;
+
 import org.bukkit.World;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -24,8 +27,8 @@ import java.util.logging.Level;
  * Also adds functions to write and load from/to file
  */
 public class OfflineGroup {
-    public final LongHashSet chunks;
-    public final LongHashSet loadedChunks;
+    public final HashSet<Long> chunks;
+    public final HashSet<Long> loadedChunks;
     public OfflineMember[] members;
     public String name;
     public UUID worldUUID;
@@ -51,8 +54,8 @@ public class OfflineGroup {
         // Obtain an average of the amount of elements to store for chunks
         // Assume that each member adds 5 chunks every 10 carts
         final int chunkCount = 25 + (int) ((double) (5 / 10) * (double) memberCount);
-        this.chunks = new LongHashSet(chunkCount);
-        this.loadedChunks = new LongHashSet(chunkCount);
+        this.chunks = new HashSet<Long>(chunkCount);
+        this.loadedChunks = new HashSet<Long>(chunkCount);
     }
 
     public static OfflineGroup readFrom(DataInputStream stream) throws IOException {
@@ -80,7 +83,7 @@ public class OfflineGroup {
 
     public boolean updateLoadedChunks(World world) {
         this.loadedChunks.clear();
-        final LongIterator iter = this.chunks.longIterator();
+        final Iterator<Long> iter = this.chunks.iterator();
         while (iter.hasNext()) {
             long chunk = iter.next();
             if (WorldUtil.isLoaded(world, MathUtil.longHashMsw(chunk), MathUtil.longHashLsw(chunk))) {
@@ -122,7 +125,7 @@ public class OfflineGroup {
             }
         }
         if (missingNo > 0) {
-            TrainCarts.plugin.log(Level.WARNING, missingNo + " carts of group '" + this.name + "' are missing! (externally edited?)");
+            TrainCarts.plugin.getLogger().log(Level.WARNING, missingNo + " carts of group '" + this.name + "' are missing! (externally edited?)");
         }
         if (rval.isEmpty()) {
             TrainPropertiesStore.remove(this.name);

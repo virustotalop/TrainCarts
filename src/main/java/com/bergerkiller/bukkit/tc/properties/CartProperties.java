@@ -150,7 +150,7 @@ public class CartProperties extends CartPropertiesStore implements IProperties {
             return true;
         }
         for (String ownerPermission : this.getOwnerPermissions()) {
-            if (CommonUtil.hasPermission(player, ownerPermission)) {
+            if (player.hasPermission(ownerPermission)) {
                 return true;
             }
         }

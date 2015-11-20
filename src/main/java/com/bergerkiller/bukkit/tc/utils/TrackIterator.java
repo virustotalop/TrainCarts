@@ -1,11 +1,13 @@
 package com.bergerkiller.bukkit.tc.utils;
 
 import com.bergerkiller.bukkit.common.bases.IntVector3;
-import com.bergerkiller.bukkit.common.utils.BlockUtil;
 import com.bergerkiller.bukkit.common.utils.FaceUtil;
 import com.bergerkiller.bukkit.common.utils.MathUtil;
 import com.bergerkiller.bukkit.tc.Util;
 import com.bergerkiller.bukkit.tc.rails.type.RailType;
+
+import me.virustotal.traincarts.utils.BlockUtil;
+
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Rails;

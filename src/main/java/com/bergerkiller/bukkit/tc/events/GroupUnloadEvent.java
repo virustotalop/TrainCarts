@@ -1,7 +1,8 @@
 package com.bergerkiller.bukkit.tc.events;
 
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
 public class GroupUnloadEvent extends GroupEvent {
@@ -12,7 +13,7 @@ public class GroupUnloadEvent extends GroupEvent {
     }
 
     public static void call(final MinecartGroup group) {
-        CommonUtil.callEvent(new GroupUnloadEvent(group));
+        Bukkit.getPluginManager().callEvent(new GroupUnloadEvent(group));
     }
 
     public static HandlerList getHandlerList() {

@@ -1,11 +1,5 @@
 package com.bergerkiller.bukkit.tc.storage;
 
-import com.bergerkiller.bukkit.common.config.DataReader;
-import com.bergerkiller.bukkit.common.config.DataWriter;
-import com.bergerkiller.bukkit.common.utils.MathUtil;
-import com.bergerkiller.bukkit.common.utils.StreamUtil;
-import com.bergerkiller.bukkit.common.utils.WorldUtil;
-import com.bergerkiller.bukkit.common.wrappers.LongHashSet.LongIterator;
 import com.bergerkiller.bukkit.tc.TrainCarts;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
@@ -132,7 +126,7 @@ public class OfflineGroupManager {
             return false;
         }
         // Load nearby chunks
-        LongIterator iter = group.chunks.longIterator();
+        Iterator<Long> iter = group.chunks.iterator()();
         long chunk;
         while (iter.hasNext()) {
             chunk = iter.next();
@@ -172,7 +166,7 @@ public class OfflineGroupManager {
                         // Load the chunk this minecart is in and remove it
                         // We already de-linked the group map, so no worry for replacements
                         Chunk chunk = world.getChunkAt(wm.cx, wm.cz);
-                        Iterator<Entity> iter = WorldUtil.getEntities(chunk).iterator();
+                        Iterator<Entity> iter = Arrays.asList(chunk.getEntities()).iterator();
                         while (iter.hasNext()) {
                             Entity next = iter.next();
                             if (next.getUniqueId().equals(wm.entityUID)) {
@@ -203,7 +197,7 @@ public class OfflineGroupManager {
     }
 
     private static void destroyMinecarts(World world) {
-        for (Entity e : WorldUtil.getEntities(world)) {
+        for (Entity e : world.getEntities()) {
             if (e instanceof Minecart) {
                 e.remove();
             }
@@ -227,7 +221,7 @@ public class OfflineGroupManager {
         Set worldentities = new HashSet(WorldUtil.getEntities(world));
         for (Chunk chunk : WorldUtil.getChunks(world)) {
             // Remove entities that are falsely added
-            Iterator<org.bukkit.entity.Entity> iter = WorldUtil.getEntities(chunk).iterator();
+            Iterator<org.bukkit.entity.Entity> iter = Arrays.asList(chunk.getEntities()).iterator();
             while (iter.hasNext()) {
                 org.bukkit.entity.Entity e = iter.next();
                 if (!worldentities.contains(e)) {
@@ -237,7 +231,7 @@ public class OfflineGroupManager {
             }
             // Remove them from other locations
             for (org.bukkit.entity.Entity e : toRemove) {
-                WorldUtil.removeEntity(e);
+             e.remove();
             }
             toRemove.clear();
         }

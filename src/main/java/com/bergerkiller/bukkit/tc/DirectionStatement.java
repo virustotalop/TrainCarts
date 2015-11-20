@@ -1,6 +1,5 @@
 package com.bergerkiller.bukkit.tc;
 
-import com.bergerkiller.bukkit.common.utils.LogicUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
 import com.bergerkiller.bukkit.tc.events.SignActionEvent;
@@ -27,9 +26,9 @@ public class DirectionStatement {
             this.text = text.substring(idx + 1);
             // Parse Direction from String text
             final String dirText = text.substring(0, idx).toLowerCase(Locale.ENGLISH);
-            if (LogicUtil.contains(dirText, "c", "continue")) {
+            if (dirText.equals("c") || dirText.equals("continue")) {
                 this.direction = Direction.fromFace(cartDirection);
-            } else if (LogicUtil.contains(dirText, "i", "rev", "reverse", "inverse")) {
+            } else if (dirText.equals("i") || dirText.equals("rev") || dirText.equals("reverse") || dirText.equals("inverse")) {
                 this.direction = Direction.fromFace(cartDirection.getOppositeFace());
             } else {
                 this.direction = Direction.parse(dirText);

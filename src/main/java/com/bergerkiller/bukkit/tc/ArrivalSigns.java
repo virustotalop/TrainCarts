@@ -1,24 +1,24 @@
 package com.bergerkiller.bukkit.tc;
 
 import com.bergerkiller.bukkit.common.Task;
-import com.bergerkiller.bukkit.common.collections.BlockMap;
-import com.bergerkiller.bukkit.common.config.FileConfiguration;
-import com.bergerkiller.bukkit.common.utils.BlockUtil;
-import com.bergerkiller.bukkit.common.utils.MaterialUtil;
 import com.bergerkiller.bukkit.common.utils.MathUtil;
-import com.bergerkiller.bukkit.common.utils.ParseUtil;
-import com.bergerkiller.bukkit.sl.API.Variables;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
+
+import me.virustotal.traincarts.utils.BlockUtil;
+import me.virustotal.traincarts.utils.MaterialUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ArrivalSigns {
     private static HashMap<String, TimeSign> timerSigns = new HashMap<String, TimeSign>();
-    private static BlockMap<TimeCalculation> timeCalculations = new BlockMap<TimeCalculation>();
+    private static Map<Block, TimeCalculation> timeCalculations = new HashMap<Block, TimeCalculation>();
     private static Task updateTask;
 
     public static TimeSign getTimer(String name) {
@@ -157,7 +157,7 @@ public class ArrivalSigns {
 
         public void setTime() {
             long duration = System.currentTimeMillis() - startTime;
-            if (MaterialUtil.ISSIGN.get(this.signblock)) {
+            if (BlockUtil.isSign(this.signblock)) {
                 Sign sign = BlockUtil.getSign(this.signblock);
                 String dur = Util.getTimeString(duration);
                 sign.setLine(3, dur);

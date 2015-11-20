@@ -1,10 +1,5 @@
 package com.bergerkiller.bukkit.tc;
 
-import com.bergerkiller.bukkit.common.collections.EntityMap;
-import com.bergerkiller.bukkit.common.entity.CommonEntity;
-import com.bergerkiller.bukkit.common.events.EntityAddEvent;
-import com.bergerkiller.bukkit.common.events.EntityRemoveFromServerEvent;
-import com.bergerkiller.bukkit.common.utils.*;
 import com.bergerkiller.bukkit.tc.controller.MemberConverter;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
@@ -47,6 +42,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Rails;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class TCListener implements Listener {
@@ -57,8 +54,8 @@ public class TCListener implements Listener {
     public static boolean cancelNextDrops = false;
     public static boolean ignoreNextEject = false;
     private ArrayList<MinecartGroup> expectUnload = new ArrayList<MinecartGroup>();
-    private EntityMap<Player, Long> lastHitTimes = new EntityMap<Player, Long>();
-    private EntityMap<Player, BlockFace> lastClickedDirection = new EntityMap<Player, BlockFace>();
+    private Map<Player, Long> lastHitTimes = new HashMap<Player, Long>();
+    private Map<Player, BlockFace> lastClickedDirection = new HashMap<Player, BlockFace>();
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
@@ -92,7 +89,7 @@ public class TCListener implements Listener {
                 }
             }
             // Double-check
-            for (Entity entity : WorldUtil.getEntities(event.getChunk())) {
+            for (Entity entity : event.getChunk().getEntities()) {
                 if (entity instanceof Minecart) {
                     MinecartMember<?> member = MinecartMemberStore.get(entity);
                     if (member == null || !member.isInteractable()) {
@@ -567,10 +564,10 @@ public class TCListener implements Listener {
             // If this is impossible for whatever reason, just drop it
             if (!Util.canInstantlyBuild(event.getPlayer())) {
                 ItemStack item = event.getPlayer().getItemInHand();
-                if (LogicUtil.nullOrEmpty(item)) {
+                if (item == null) {
                     event.getPlayer().setItemInHand(new ItemStack(Material.SIGN, 1));
-                } else if (MaterialUtil.isType(item, Material.SIGN) && item.getAmount() < ItemUtil.getMaxSize(item)) {
-                    ItemUtil.addAmount(item, 1);
+                } else if (item.getType() == Material.SIGN && item.getAmount() < item.getMaxStackSize()) {
+                    item.setAmount(item.getAmount() + 1);
                     event.getPlayer().setItemInHand(item);
                 } else {
                     // Drop the item

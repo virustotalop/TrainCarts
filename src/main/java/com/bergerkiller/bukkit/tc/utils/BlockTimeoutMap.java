@@ -1,13 +1,14 @@
 package com.bergerkiller.bukkit.tc.utils;
 
-import com.bergerkiller.bukkit.common.collections.BlockMap;
+import java.util.HashMap;
+
 import org.bukkit.block.Block;
 
 /**
  * Used to store a simple 'time out' value to a block,
  * and quickly find out if this block can be used again.
  */
-public class BlockTimeoutMap extends BlockMap<Long> {
+public class BlockTimeoutMap extends HashMap<Block,Long> {
     private static final long serialVersionUID = 1L;
 
     public void mark(Block block) {

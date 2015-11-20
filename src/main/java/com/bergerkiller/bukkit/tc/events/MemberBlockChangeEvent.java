@@ -1,7 +1,8 @@
 package com.bergerkiller.bukkit.tc.events;
 
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
+
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.HandlerList;
 
@@ -21,7 +22,7 @@ public class MemberBlockChangeEvent extends MemberEvent {
     }
 
     public static void call(final MinecartMember<?> member, final Block from, final Block to) {
-        CommonUtil.callEvent(new MemberBlockChangeEvent(member, from, to));
+    	 Bukkit.getPluginManager().callEvent(new MemberBlockChangeEvent(member, from, to));
     }
 
     public Block getFrom() {

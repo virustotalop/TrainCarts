@@ -1,11 +1,5 @@
 package com.bergerkiller.bukkit.tc.signactions;
 
-import com.bergerkiller.bukkit.common.collections.BlockMap;
-import com.bergerkiller.bukkit.common.config.DataReader;
-import com.bergerkiller.bukkit.common.config.DataWriter;
-import com.bergerkiller.bukkit.common.utils.ParseUtil;
-import com.bergerkiller.bukkit.common.utils.StringUtil;
-import com.bergerkiller.bukkit.common.utils.WorldUtil;
 import com.bergerkiller.bukkit.tc.Permission;
 import com.bergerkiller.bukkit.tc.Util;
 import com.bergerkiller.bukkit.tc.controller.MinecartGroup;
@@ -17,6 +11,7 @@ import com.bergerkiller.bukkit.tc.events.SignChangeActionEvent;
 import com.bergerkiller.bukkit.tc.signactions.spawner.SpawnSign;
 import com.bergerkiller.bukkit.tc.utils.TrackIterator;
 import com.bergerkiller.bukkit.tc.utils.TrackWalkIterator;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -29,9 +24,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class SignActionSpawn extends SignAction {
-    private static BlockMap<SpawnSign> spawnSigns = new BlockMap<SpawnSign>();
+    private static Map<Block, SpawnSign> spawnSigns = new HashMap<Block, SpawnSign>();
     private static HashMap<String, EntityType> minecartTypes = new HashMap<String, EntityType>();
     private static HashMap<String, Permission> minecartPerms = new HashMap<String, Permission>();
 
@@ -79,7 +75,7 @@ public class SignActionSpawn extends SignAction {
         final String line = event.getLine(1).toLowerCase(Locale.ENGLISH);
         final int idx = line.indexOf(' ');
         if (idx == -1) {
-            return StringUtil.EMPTY_ARRAY;
+            return new String[]{};
         }
         return line.substring(idx + 1).split(" ");
     }

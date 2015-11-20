@@ -1,7 +1,8 @@
 package com.bergerkiller.bukkit.tc.events;
 
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.controller.MinecartMember;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
 public class MemberSpawnEvent extends MemberEvent {
@@ -16,7 +17,9 @@ public class MemberSpawnEvent extends MemberEvent {
     }
 
     public static MemberSpawnEvent call(MinecartMember<?> member) {
-        return CommonUtil.callEvent(new MemberSpawnEvent(member));
+    	MemberSpawnEvent event = new MemberSpawnEvent(member);
+    	Bukkit.getPluginManager().callEvent(event);
+        return event;
     }
 
     public void setMember(MinecartMember<?> member) {

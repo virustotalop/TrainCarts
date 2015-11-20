@@ -1,7 +1,5 @@
 package com.bergerkiller.bukkit.tc.signactions;
 
-import com.bergerkiller.bukkit.common.utils.BlockUtil;
-import com.bergerkiller.bukkit.common.utils.CommonUtil;
 import com.bergerkiller.bukkit.tc.Permission;
 import com.bergerkiller.bukkit.tc.TrainCarts;
 import com.bergerkiller.bukkit.tc.Util;
@@ -172,7 +170,8 @@ public abstract class SignAction {
         }
         //Event
         info.setCancelled(false);
-        if (!CommonUtil.callEvent(info).isCancelled() && actions != null) {
+        
+        if (info.isCancelled() && actions != null) {
             //facing?
             boolean facing;
             if (info.isAction(SignActionType.REDSTONE_CHANGE, SignActionType.REDSTONE_ON, SignActionType.REDSTONE_OFF,
@@ -187,7 +186,7 @@ public abstract class SignAction {
                     action.execute(info);
                 } catch (Throwable t) {
                     TrainCarts.plugin.getLogger().log(Level.SEVERE, "Failed to execute " + info.getAction().toString() +
-                            " for " + action.getClass().getSimpleName() + ":", CommonUtil.filterStackTrace(t));
+                            " for " + action.getClass().getSimpleName() + ":", t.getMessage());
                 }
             }
         }
